@@ -42,7 +42,7 @@ app.use("/api/v1/blood-donor", BloodDonorRouter);
 app.get("/", cors(), (req, res) => {
   res.status(200).json({
     success: true,
-    message: "PBTS server is running!",
+    message: "NNS server is running!",
   });
 });
 

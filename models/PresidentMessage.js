@@ -5,7 +5,6 @@ const presidentMessageSchema = {
     type: String,
     unique: true,
     required: true,
-    maxlength: 500,
   },
 };
 

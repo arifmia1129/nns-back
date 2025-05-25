@@ -5,8 +5,8 @@ exports.createMemberService = async (member) => {
   return await Member.create(member);
 };
 
-exports.getMemberSerivice = async () => {
-  return await Member.find();
+exports.getMemberSerivice = async (filters = {}) => {
+  return await Member.find(filters);
 };
 
 exports.deleteMemberByIdService = async (id) => {

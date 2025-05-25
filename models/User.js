@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-const moment = require('moment');
+const mongoose = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+const moment = require("moment");
 
 /**
  * name (required)
@@ -26,12 +26,12 @@ const userScheme = new mongoose.Schema(
     mobile: {
       type: String,
       trim: true,
-      unique: [true, 'Mobile number must be unique'],
-      required: [true, 'Mobile is required'],
+      unique: [true, "Mobile number must be unique"],
+      required: [true, "Mobile is required"],
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: [true, "Password is required"],
       minLength: 6,
     },
     institute: {
@@ -44,7 +44,7 @@ const userScheme = new mongoose.Schema(
     },
     confirmPassword: {
       type: String,
-      required: [true, 'Please confirm your password'],
+      required: [true, "Please confirm your password"],
       validate: {
         validator: function (value) {
           return value === this.password;
@@ -56,26 +56,26 @@ const userScheme = new mongoose.Schema(
       type: String,
       enum: {
         values: [
-          'adviser',
-          'principal-adviser',
-          'blood-donor',
-          'member',
-          'talent-student',
-          'university-student',
-          'donor',
-          'sponsor',
-          'freelancer',
-          'volunteer',
+          "adviser",
+          "principal-adviser",
+          "blood-donor",
+          "member",
+          "talent-student",
+          "university-student",
+          "donor",
+          "sponsor",
+          "freelancer",
+          "volunteer",
         ],
       },
       required: true,
     },
     name: {
       type: String,
-      required: [true, 'Please provide a name'],
+      required: [true, "Please provide a name"],
       trim: true,
-      minLength: [2, 'Name must be at least 3 characters'],
-      maxLength: [100, 'Name is too large'],
+      minLength: [2, "Name must be at least 3 characters"],
+      maxLength: [100, "Name is too large"],
     },
     email: {
       type: String,
@@ -104,12 +104,16 @@ const userScheme = new mongoose.Schema(
       type: String,
       required: true,
     },
+    maritalStatus: {
+      type: String,
+      required: true,
+    },
     facebookUrl: String,
     bloodGroup: {
       type: String,
       lowercase: true,
       required: true,
-      enum: ['a+', 'a-', 'b+', 'b-', 'ab+', 'ab-', 'o+', 'o-'],
+      enum: ["a+", "a-", "b+", "b-", "ab+", "ab-", "o+", "o-"],
     },
     isAgreeDonateBlood: {
       type: Boolean,
@@ -120,9 +124,9 @@ const userScheme = new mongoose.Schema(
       type: String,
       validate: {
         validator: function (value) {
-          return moment(value, 'DD-MM-YYYY', true).isValid();
+          return moment(value, "DD-MM-YYYY", true).isValid();
         },
-        message: 'Invalid date format. Please use the DD-MM-YYYY format.',
+        message: "Invalid date format. Please use the DD-MM-YYYY format.",
       },
     },
     nid: {
@@ -135,9 +139,9 @@ const userScheme = new mongoose.Schema(
       required: true,
       validate: {
         validator: function (value) {
-          return moment(value, 'DD-MM-YYYY', true).isValid();
+          return moment(value, "DD-MM-YYYY", true).isValid();
         },
-        message: 'Invalid date format. Please use the DD-MM-YYYY format.',
+        message: "Invalid date format. Please use the DD-MM-YYYY format.",
       },
     },
     educationQualification: {
@@ -147,8 +151,8 @@ const userScheme = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: 'inactive',
-      enum: ['active', 'inactive', 'blocked'],
+      default: "inactive",
+      enum: ["active", "inactive", "blocked"],
     },
   },
   {
@@ -156,10 +160,10 @@ const userScheme = new mongoose.Schema(
   }
 );
 
-userScheme.pre('save', function (next) {
+userScheme.pre("save", function (next) {
   const password = this.password;
 
-  if (this.isModified('password') || this.isNew) {
+  if (this.isModified("password") || this.isNew) {
     const hashedPassword = bcrypt.hashSync(password);
 
     this.password = hashedPassword;
@@ -177,7 +181,7 @@ userScheme.methods.comparePassword = function (pass, hash) {
 };
 
 userScheme.methods.generateConfirmationToken = function () {
-  const token = crypto.randomBytes(32).toString('hex');
+  const token = crypto.randomBytes(32).toString("hex");
   this.confirmationToken = token;
 
   const date = new Date();
@@ -188,6 +192,6 @@ userScheme.methods.generateConfirmationToken = function () {
   return token;
 };
 
-const User = mongoose.model('User', userScheme);
+const User = mongoose.model("User", userScheme);
 
 module.exports = User;

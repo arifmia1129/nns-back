@@ -3,16 +3,7 @@ const {
   getMemberSerivice,
   deleteMemberByIdService,
 } = require("../services/member.service");
-const {
-  signupService,
-  loggedInUserService,
-  getUserByToken,
-  getUsersService,
-  changeUserRoleService,
-  changeUserStatusService,
-} = require("../services/user.services");
 const sendSms = require("../utils/sendSms");
-const { generateToken } = require("../utils/token");
 
 exports.createMember = async (req, res, next) => {
   try {
@@ -38,7 +29,14 @@ exports.createMember = async (req, res, next) => {
 
 exports.getMember = async (req, res, next) => {
   try {
-    const member = await getMemberSerivice();
+    const { committeeName } = req.query;
+    const filters = {};
+
+    if (committeeName) {
+      filters.committeeName = committeeName;
+    }
+
+    const member = await getMemberSerivice(filters);
 
     if (!member.length) {
       return res.status(400).json({

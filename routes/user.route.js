@@ -7,7 +7,7 @@ const auth = require("../middleware/auth.js");
 
 router.get("/", userController.getUsers);
 
-router.post("/signup", uploader.single("image"), userController.signup);
+router.post("/register", uploader.single("image"), userController.signup);
 
 router.post("/login", userController.login);
 router.post("/verify-nid", verifyToken, userController.verifyNid);

@@ -38,6 +38,11 @@ const memberSchema = new Schema({
   },
   organizationDesignation: {
     type: String,
+    enum: ["member", "advisor"],
+    required: true,
+  },
+  committeeName: {
+    type: String,
     required: true,
   },
 });

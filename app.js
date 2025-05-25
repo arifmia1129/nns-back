@@ -19,6 +19,7 @@ const PicnicRouter = require("./routes/picnic.route.js");
 const NoticeRouter = require("./routes/notice.route.js");
 const BloodDonorRouter = require("./routes/bloodDonor.route.js");
 const SettingRouter = require("./routes/setting.route.js");
+const PaymentRouter = require("./routes/payment.route.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,6 +41,7 @@ app.use("/api/v1/picnic", PicnicRouter);
 app.use("/api/v1/notice", NoticeRouter);
 app.use("/api/v1/blood-donor", BloodDonorRouter);
 app.use("/api/v1/setting", SettingRouter);
+app.use("/api/v1/payments", PaymentRouter);
 
 app.get("/", cors(), (req, res) => {
   res.status(200).json({

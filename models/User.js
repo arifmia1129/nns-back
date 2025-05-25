@@ -154,6 +154,22 @@ const userScheme = new mongoose.Schema(
       default: "inactive",
       enum: ["active", "inactive", "blocked"],
     },
+    membershipId: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    monthlyFee: {
+      type: Number,
+      default: 50,
+    },
+    lastPaymentDate: Date,
+    paymentHistory: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Payment",
+      },
+    ],
   },
   {
     timestamps: true,

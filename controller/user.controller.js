@@ -9,12 +9,17 @@ const {
 } = require("../services/user.services");
 const sendSms = require("../utils/sendSms");
 const { generateToken } = require("../utils/token");
+const moment = require("moment");
 
 exports.signup = async (req, res, next) => {
   try {
     const userInfo = req.body;
 
     userInfo.imageUrl = req.file.destination + req.file.filename;
+
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    userInfo.membershipId = `NNS-${moment().format("YYMM")}-${randomNum}`;
+
     const user = await signupService(userInfo);
 
     await user.save({ validateBeforeSave: false });

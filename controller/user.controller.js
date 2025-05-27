@@ -18,7 +18,9 @@ exports.signup = async (req, res, next) => {
     userInfo.imageUrl = req.file.destination + req.file.filename;
 
     const randomNum = Math.floor(1000 + Math.random() * 9000);
-    userInfo.membershipId = `NNS-${moment().format("YYMM")}-${randomNum}`;
+    userInfo.membershipId = userInfo?.nnsId
+      ? userInfo?.nnsId
+      : `NNS-${moment().format("YYMM")}-${randomNum}`;
 
     const user = await signupService(userInfo);
 

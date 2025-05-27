@@ -10,7 +10,7 @@ const sendSms = require("../utils/sendSms");
 exports.createBloodDonor = async (req, res, next) => {
   try {
     const bloodDonorInfo = req.body;
-    bloodDonorInfo.profileImage = req.file.destination + req.file.filename;
+    bloodDonorInfo.profileImage = req?.file?.destination + req?.file?.filename;
     const bloodDonor = await createBloodDonorService(bloodDonorInfo);
 
     if (bloodDonor) {
